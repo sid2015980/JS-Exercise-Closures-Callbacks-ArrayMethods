@@ -48,8 +48,8 @@ function processFirstItem(stringList, callback) {
  * [2] Invoking `processLength` passing `[]` and `(num) => "There are " + num`,
  * should return "There are 0".
 */
-function processLength(/* CODE HERE */) {
-  /* CODE HERE */
+function processLength(list, callback) {
+  return callback(list.length)
 }
 
 /**
@@ -66,8 +66,8 @@ function processLength(/* CODE HERE */) {
  * Invoking `processLastItem` passing `['foo', 'bar']` and `(str) => str + str`,
  * should return 'barbar'.
 */
-function processLastItem(/* CODE HERE */) {
-  /* CODE HERE */
+function processLastItem(stringList, callback) {
+  return callback(stringList.slice (-1)[0])
 }
 
 /**
@@ -88,8 +88,9 @@ function processLastItem(/* CODE HERE */) {
  * [2] Invoking `processSum` passing `-5`, '-1', and `(num) => num + 1000`,
  * should return 994.
 */
-function processSum(/* CODE HERE */) {
-  /* CODE HERE */
+function processSum(num1, num2, callback) {
+  const totalSum=num1+num2
+  return callback(totalSum)
 }
 
 /**
@@ -110,8 +111,8 @@ function processSum(/* CODE HERE */) {
  * [2] Invoking `processProduct` passing 25 and 0 and `(num) => num + 1000`,
  * should return 1000.
 */
-function processProduct(/* CODE HERE */) {
-  /* CODE HERE */
+function processProduct(num1, num2, callback) {
+  return callback(num1*num2)
 }
 
 /**
@@ -132,8 +133,13 @@ function processProduct(/* CODE HERE */) {
  * [2] Invoking `processDuplicateFree` passing `[1,1,2,2,3]` and `(arr) => arr.length`,
  * should return 3.
 */
-function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */) {
-  /* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */
+function processDuplicateFree(list, callback) {
+  const filter = list.filter((item, i) => {
+    if(list.indexOf(item) === i){
+    return item
+  }
+})
+return callback(filter)
 }
 
 /////////////// HIGHER-ORDER ARRAY METHODS ///////////////
@@ -155,9 +161,20 @@ function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS
  * 
  * [2] Invoking `lowerCaseStrings` with `['a', 'b', 'c' ]` will return `[ 'a', 'b', 'c' ]`.
 */
-function lowerCaseStrings(/* code here */) {
-  /* code here */
+function lowerCaseStrings(strings) {
+  let small = [];
+  strings.forEach(function(item){
+    small.push(item.toLowerCase())
+  })
+  return small
+
+  // for (let i = 0; i < strings.length; i++){
+//   small.push(strings[i].toLowerCase())
+// }
+// return small
 }
+
+
 
 /**
  * ### Challenge `isItAnApple`
@@ -174,8 +191,15 @@ function lowerCaseStrings(/* code here */) {
  * 
  * [2] Invoking `isItAnApple` with `['a', 'b', 'c' ]` will return `[ false, false, false ]`.
 */
-function isItAnApple(/* code here */) {
-  /* code here */
+function isItAnApple(strings) {
+  const appleCheck = strings.map(function (items) {
+    if (items === "apple") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return appleCheck;
 }
 
 /**
@@ -194,8 +218,9 @@ function isItAnApple(/* code here */) {
  * 
  * [2] Invoking `removeApple` with `['a', 'b', 'c' ]` will return `[ 'a', 'b', 'c' ]`.
 */
-function removeApple(/* code here */) {
-  /* code here */
+function removeApple(strings) {
+const removed = strings.filter(item => item !== "apple")
+return removed
 }
 
 /**
@@ -213,8 +238,11 @@ function removeApple(/* code here */) {
  * 
  * [2] Invoking `stringSmash` with `['a', 'b', 'c' ]` will return `abc`.
 */
-function stringSmash(/* code here */) {
-  /* code here */
+function stringSmash(strings) {
+  const combined = strings.reduce((items, cv) => {
+    return items + cv
+  })
+  return combined
 }
 
 // A local community center is holding a fund raising 5k fun run and has invited
@@ -232,8 +260,12 @@ function stringSmash(/* code here */) {
  * @returns an array with all the runners' full names in the following format: "Smith, John".
  * The full names appear in the array in the same order the runners appear in the `runners` array.
 */
-function getFullNames(/* CODE HERE */) {
-  /* CODE HERE */
+function getFullNames(runners) {
+  const fullName = []
+  runners.forEach(function(name){
+    fullName.push(`${name.last_name}, ${name.first_name}`)
+  })
+  return fullName
 }
 
 /**
@@ -248,8 +280,11 @@ function getFullNames(/* CODE HERE */) {
  * @returns an array with all the runners' first names in ALL CAPS.
  * The first names appear in the array in the same order the runners appear in the `runners` array.
 */
-function firstNamesAllCaps(/* CODE HERE */) {
-  /* CODE HERE */
+function firstNamesAllCaps(runners) {
+  const newData = runners.map(function(names){
+    return names.first_name.toUpperCase();
+    })
+    return newData
 }
 
 /**
@@ -266,8 +301,11 @@ function firstNamesAllCaps(/* CODE HERE */) {
  * @returns an array containing only the runners that use the given `tShirtSize`.
  * The runners in the array appear in the same order they appear in the `runners` array.
 */
-function getRunnersByTShirtSize(/* CODE HERE */) {
-  /* CODE HERE */
+function getRunnersByTShirtSize(runners, tShirtSize) {
+  const shirtFilter = runners.filter(function(size){
+    return size.shirt_size === tShirtSize;
+    })
+    return shirtFilter
 }
 
 /**
@@ -281,8 +319,11 @@ function getRunnersByTShirtSize(/* CODE HERE */) {
  * @param runners array of runners like the one inside the /data/runners.js file.
  * @returns a number which is the sum of the donations by all runners.
 */
-function tallyUpDonations(/* CODE HERE */) {
-  /* CODE HERE */
+function tallyUpDonations(runners) {
+  const sum = runners.reduce(function (acc, cv) {
+    return acc + cv.donation
+      }, 0);
+    return sum;
 }
 
 /////////////// CLOSURES ///////////////
@@ -295,8 +336,10 @@ function tallyUpDonations(/* CODE HERE */) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ * count is declared outisde the function in counter2
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ * counter1 because it has the function nested inside another
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
  *
@@ -305,7 +348,7 @@ function tallyUpDonations(/* CODE HERE */) {
 // counter1 code
 function counterMaker() {
   let count = 0;
-  return function counter() {
+  return function() {
     count++;
   }
 }
@@ -340,8 +383,16 @@ function counter2() {
  * counter() // should return 0
  * etc
 */
-function counterMakerWithLimit(/* CODE HERE */) {
-  /* CODE HERE */
+function counterMakerWithLimit(maxVal) {
+  let count = 0;
+  return function() {
+    if(count > maxVal) {
+      count =1; 
+    }else{
+      count++;
+    }
+    return count -1;
+  }
 }
 
 /////////////// END OF CHALLENGE ///////////////
